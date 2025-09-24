@@ -12,10 +12,9 @@ spec:
     helm:
       releaseName: unrealserver-darkdungeons-dev
       valueFiles:
-      - $values/unrealserver-darkdungeons/dev/values.yaml
+      - $values/values/unrealserver-darkdungeons/dev/values.yaml
   - repoURL: https://github.com/javirugo/argocd-applications.git
     targetRevision: main
-    path: values
     ref: values
   destination:
     server: "https://kubernetes.default.svc"
