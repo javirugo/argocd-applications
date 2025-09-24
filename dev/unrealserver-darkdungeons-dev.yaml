@@ -4,7 +4,7 @@ metadata:
   name: unrealserver-darkdungeons-dev
   namespace: argocd
   annotations:
-    argocd.argoproj.io/refresh=hard
+    argocd.argoproj.io/refresh: hard
 spec:
   project: dev
   sources:
