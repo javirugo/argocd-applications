@@ -3,7 +3,7 @@ environmentName: "dev"
 
 image:
   repository: "docker.galluman.com/unreal/darkdungeons-server"
-  tag: "d51036972a7a7f834c980e1810fc295891965826"
+  tag: "189375360d072fd9e1004d823a8fa38e23c6ea2d"
   pullPolicy: Always
 
 resources:
