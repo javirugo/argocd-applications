@@ -27,7 +27,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}-1
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map1 }}", "-log"]
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map1 }}", "-log"]
           args: ["-port=7777"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -52,7 +52,7 @@ spec:
 
         - name: {{ .Chart.Name }}-2
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map2 }}", "-log"]
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map2 }}", "-log"]
           args: ["-port=7778"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -77,7 +77,7 @@ spec:
 
         - name: {{ .Chart.Name }}-3
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map3 }}", "-log"]
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map3 }}", "-log"]
           args: ["-port=7779"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -102,7 +102,7 @@ spec:
 
         - name: {{ .Chart.Name }}-4
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map4 }}", "-log"]
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map4 }}", "-log"]
           args: ["-port=7780"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -127,7 +127,7 @@ spec:
 
         - name: {{ .Chart.Name }}-5
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map5 }}", "-log"]
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map5 }}", "-log"]
           args: ["-port=7781"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
