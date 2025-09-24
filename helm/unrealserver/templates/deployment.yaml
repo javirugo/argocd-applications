@@ -16,7 +16,7 @@ spec:
         {{- include "unrealserver.labels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        - name: nexussecret
+        - name: nexuspullsecret
       serviceAccountName: "unrealserver-{{.Values.name}}"
       tolerations:
       - key: "nodetype"
