@@ -12,7 +12,7 @@ spec:
     chart: unrealserver
     targetRevision: 0.0.1
     helm:
-      releaseName: unrealserver-darkdungeons-dev
+      releaseName: darkdungeons-dev
       valueFiles:
       - $values/values/unrealserver-darkdungeons/dev/values.yaml
   - repoURL: https://github.com/javirugo/argocd-applications.git

@@ -22,8 +22,6 @@ spec:
       - key: "nodetype"
         operator: "Exists"
         effect: "NoSchedule"
-      nodeSelector:
-        nodetype: unreal
       containers:
         - name: {{ .Chart.Name }}-1
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
