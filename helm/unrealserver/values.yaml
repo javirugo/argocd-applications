@@ -1,0 +1,40 @@
+# Name of the release
+name: ""
+
+# Environment name for the release
+environmentName: "dev"
+
+# Number of replicas
+replicaCount: 1
+
+# Image information
+image:
+  repository: "docker.galluman.com/unreal/unrealserver-NAME"
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# Create service account and mount api token for the deployment
+# The name of the service account will be generated like: unrealserver-$RELEASE_NAME
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+
+
+# Resources for the pods
+resources: {}
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
+
+
+# Maps to load on each container
+serverMaps:
+  map1: default
+  map2: default
+  map3: default
+  map4: default
+  map5: default

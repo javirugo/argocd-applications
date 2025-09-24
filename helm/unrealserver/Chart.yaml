@@ -1,0 +1,5 @@
+apiVersion: v2
+name: unrealserver
+description: Unreal Engine Server
+type: application
+version: 0.0.1

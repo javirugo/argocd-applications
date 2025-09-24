@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "unrealserver-{{ .Values.name }}"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "unrealserver.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "unrealserver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "unrealserver.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: nexussecret
+      serviceAccountName: "unrealserver-{{.Values.name}}"
+      tolerations:
+      - key: "nodetype"
+        operator: "Exists"
+        effect: "NoSchedule"
+      nodeSelector:
+        nodetype: unreal
+      containers:
+        - name: {{ .Chart.Name }}-1
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map1 }}", "-log"]
+          args: ["-port=7777"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gameserver1
+              containerPort: 7777
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          {{- with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- range $value := .Values.extraVaultEnvVars }}
+          - name: "{{ $value.name }}"
+            valueFrom:
+              secretKeyRef:
+                key: "{{ $value.name }}"
+                name: "unrealserver-{{ $.Values.name }}"
+          {{- end }}
+
+        - name: {{ .Chart.Name }}-2
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map2 }}", "-log"]
+          args: ["-port=7778"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gameserver2
+              containerPort: 7778
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          {{- with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- range $value := .Values.extraVaultEnvVars }}
+          - name: "{{ $value.name }}"
+            valueFrom:
+              secretKeyRef:
+                key: "{{ $value.name }}"
+                name: "unrealserver-{{ $.Values.name }}"
+          {{- end }}
+
+        - name: {{ .Chart.Name }}-3
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map3 }}", "-log"]
+          args: ["-port=7779"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gameserver3
+              containerPort: 7779
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          {{- with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- range $value := .Values.extraVaultEnvVars }}
+          - name: "{{ $value.name }}"
+            valueFrom:
+              secretKeyRef:
+                key: "{{ $value.name }}"
+                name: "unrealserver-{{ $.Values.name }}"
+          {{- end }}
+
+        - name: {{ .Chart.Name }}-4
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map4 }}", "-log"]
+          args: ["-port=7780"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gameserver4
+              containerPort: 7780
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          {{- with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- range $value := .Values.extraVaultEnvVars }}
+          - name: "{{ $value.name }}"
+            valueFrom:
+              secretKeyRef:
+                key: "{{ $value.name }}"
+                name: "unrealserver-{{ $.Values.name }}"
+          {{- end }}
+
+        - name: {{ .Chart.Name }}-5
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          command: ["sh", "-c", "/app/server.sh", "{{ .Values.image.serverMaps.map5 }}", "-log"]
+          args: ["-port=7781"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gameserver5
+              containerPort: 7781
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          {{- with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- range $value := .Values.extraVaultEnvVars }}
+          - name: "{{ $value.name }}"
+            valueFrom:
+              secretKeyRef:
+                key: "{{ $value.name }}"
+                name: "unrealserver-{{ $.Values.name }}"
+          {{- end }}
