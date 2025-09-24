@@ -8,7 +8,7 @@ spec:
   sources:
   - repoURL: https://github.com/javirugo/argocd-applications.git
     targetRevision: main
-    path: values/unrealserver-darkdungeons/dev
+    path: values/
     ref: values
   - repoURL: https://nexus.galluman.com/repository/helm-homelab/
     chart: unrealserver
@@ -16,7 +16,7 @@ spec:
     helm:
       releaseName: unrealserver-darkdungeons-dev
       valueFiles:
-      - $values/values.yaml
+      - $values/unrealserver-darkdungeons/dev/values.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: dev
