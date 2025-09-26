@@ -38,3 +38,10 @@ serverMaps:
   map3: default
   map4: default
   map5: default
+
+nodePorts:
+  server1: 31777
+  server2: 31778
+  server3: 31779
+  server4: 31780
+  server5: 31781

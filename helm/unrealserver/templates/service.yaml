@@ -13,26 +13,26 @@ spec:
       port: 7777
       targetPort: 7777
       protocol: UDP
-      nodePort: 31777
+      nodePort: {{ .Values.nodePorts.server1 }}
     - name: gameserver2
       port: 7778
       targetPort: 7778
       protocol: UDP
-      nodePort: 31778
+      nodePort: {{ .Values.nodePorts.server2 }}
     - name: gameserver3
       port: 7779
       targetPort: 7779
       protocol: UDP
-      nodePort: 31779
+      nodePort: {{ .Values.nodePorts.server3 }}
     - name: gameserver4
       port: 7780
       targetPort: 7780
       protocol: UDP
-      nodePort: 31780
+      nodePort: {{ .Values.nodePorts.server4 }}
     - name: gameserver5
       port: 7781
       targetPort: 7781
       protocol: UDP
-      nodePort: 31781
+      nodePort: {{ .Values.nodePorts.server5 }}
   selector:
     {{- include "unrealserver.selectorLabels" $ | nindent 4 }}

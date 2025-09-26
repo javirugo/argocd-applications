@@ -20,3 +20,10 @@ serverMaps:
   map3: Start_Persistent
   map4: Start_Persistent
   map5: Start_Persistent
+
+nodePorts:
+  server1: 30777
+  server2: 30778
+  server3: 30779
+  server4: 30780
+  server5: 30781
