@@ -1,11 +1,9 @@
 name: "unrealserver-darkdungeons"
 environmentName: "dev"
-
 image:
   repository: "docker.galluman.com/unreal/darkdungeons-server"
-  tag: "189375360d072fd9e1004d823a8fa38e23c6ea2d"
+  tag: "cd5fbad50f5da310f21c52c07c7dd64e45c494a9"
   pullPolicy: Always
-
 resources:
   requests:
     cpu: 200m
@@ -13,14 +11,12 @@ resources:
   limits:
     cpu: 2
     memory: 512Mi
-
 serverMaps:
   map1: Start_Persistent
   map2: Start_Persistent
   map3: Start_Persistent
   map4: Start_Persistent
   map5: Start_Persistent
-
 nodePorts:
   server1: 30777
   server2: 30778
