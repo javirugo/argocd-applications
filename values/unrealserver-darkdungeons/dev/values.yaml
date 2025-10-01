@@ -6,11 +6,11 @@ image:
   pullPolicy: Always
 resources:
   requests:
-    cpu: 200m
-    memory: 64Mi
-  limits:
     cpu: 2
-    memory: 512Mi
+    memory: 4G
+  limits:
+    cpu: 4
+    memory: 8G
 serverMaps:
   map1: Start_Persistent
   map2: Start_Persistent

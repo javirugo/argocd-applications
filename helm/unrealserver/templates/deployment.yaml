@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "unrealserver-{{ .Values.name }}"
+  name: "{{ $.Values.name }}"
   namespace: {{ .Values.namespace }}
   labels:
     {{- include "unrealserver.labels" . | nindent 4 }}
@@ -17,14 +17,14 @@ spec:
     spec:
       imagePullSecrets:
         - name: nexuspullsecret
-      serviceAccountName: "unrealserver-{{.Values.name}}"
+      serviceAccountName: "{{ .Values.name }}"
       tolerations:
       - key: "nodetype"
         operator: "Exists"
         effect: "NoSchedule"
       containers:
-        - name: {{ .Chart.Name }}-1
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+        - name: "{{ .Chart.Name }}-1"
+          image: "{{ .Values.image.repository }}:{{ $.Values.image.tag | default "latest" }}"
           command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map1 }}", "-log"]
           args: ["-port=7777"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -48,8 +48,8 @@ spec:
                 name: "unrealserver-{{ $.Values.name }}"
           {{- end }}
 
-        - name: {{ .Chart.Name }}-2
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+        - name: "{{ .Chart.Name }}-2"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map2 }}", "-log"]
           args: ["-port=7778"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -73,8 +73,8 @@ spec:
                 name: "unrealserver-{{ $.Values.name }}"
           {{- end }}
 
-        - name: {{ .Chart.Name }}-3
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+        - name: "{{ .Chart.Name }}-3"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map3 }}", "-log"]
           args: ["-port=7779"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -98,8 +98,8 @@ spec:
                 name: "unrealserver-{{ $.Values.name }}"
           {{- end }}
 
-        - name: {{ .Chart.Name }}-4
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+        - name: "{{ .Chart.Name }}-4"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map4 }}", "-log"]
           args: ["-port=7780"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -123,8 +123,8 @@ spec:
                 name: "unrealserver-{{ $.Values.name }}"
           {{- end }}
 
-        - name: {{ .Chart.Name }}-5
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+        - name: "{{ .Chart.Name }}-5"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           command: ["sh", "-c", "/app/server.sh", "{{ .Values.serverMaps.map5 }}", "-log"]
           args: ["-port=7781"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
