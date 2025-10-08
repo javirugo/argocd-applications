@@ -10,7 +10,7 @@ replicaCount: 1
 # Image information
 image:
   repository: "docker.galluman.com/unreal/backendserver"
-  tag: "d341f4935688f10fb7051bfe1a17232cff67d988"
+  tag: "7e51ce0ee2db58ea95b00a3711d47715bcfe0a74"
 
 # Resources for the pods
 resources:
