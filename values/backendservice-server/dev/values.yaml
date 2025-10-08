@@ -1,0 +1,60 @@
+# Name of the release
+name: "players"
+
+# Environment name for the release
+environmentName: "dev"
+
+# Number of replicas
+replicaCount: 1
+
+# Image information
+image:
+  repository: "docker.galluman.com/unreal/backendplayers"
+  tag: "d341f4935688f10fb7051bfe1a17232cff67d988"
+
+# Resources for the pods
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# Probes information
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+startupProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+
+# Traefik Gateway and HTTPRoute settings
+apigateway:
+  gatewayName: backend-api
+  hostname: api-dev.galluman.com
+  pathPrefix: /
+
+# Database settings
+database:
+  usesDatabase: true
+
+# Rollout Strategy
+# Argo Rollouts strategy section.
+# see: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
+rollout:
+  strategy:
+    blueGreen:
+      autoPromotionEnabled: true

@@ -1,0 +1,90 @@
+# Name of the release
+name: ""
+
+# Environment name for the release
+environmentName: "dev"
+
+# Number of replicas
+replicaCount: 1
+
+# Image information
+image:
+  repository: "docker.galluman.com/unreal/backendNAME"
+  tag: ""
+  pullPolicy: IfNotPresent
+  imagePullSecret: nexuspullsecret
+
+# Create service account and mount api token for the deployment
+# The name of the service account will be generated like: unrealserver-$RELEASE_NAME
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+
+# Resources for the pods
+resources: {}
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
+
+# Probes information
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+startupProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+
+# Traefik Gateway and HTTPRoute settings
+apigateway:
+  gatewayName: backend-api
+  hostname: api.galluman.com
+  pathPrefix: /
+
+# Traefik Middleware to apply to the HTTPRoute
+# see: 
+middleware:
+  enabled: false
+  spec: {}
+
+# Database settings
+database:
+  usesDatabase: true
+
+# Extra ENV variables
+# extraEnvVars:
+#   - name: VAR1
+#     value: VALUE1
+
+
+# Rollout Strategy
+# Argo Rollouts strategy section.
+# see: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
+rollout:
+  strategy:
+    blueGreen:
+      autoPromotionEnabled: true
+
+# If a blue/green rollout is used, activeService and previewService will be
+# set to $NAME and $NAME-preview
+#  blueGreen:
+#    autoPromotionEnabled: true
+
+# If a canary rollout is used, stable and canary services will be
+# set to $NAME and $NAME-canary
+#  canary:

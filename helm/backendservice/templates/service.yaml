@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "backendservice-{{ $.Values.name }}"
+  namespace: {{ $.Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" $ | nindent 4 }}
+    service-type: active
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "backendservice.selectorLabels" $ | nindent 4 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  {{- with .Values.strategy.blueGreen }}
+  name: "backendservice-{{ $.Values.name }}-preview"
+  {{- end }}
+  {{- with .Values.strategy.canary }}
+  name: "backendservice-{{ $.Values.name }}-canary"
+  {{- end }}
+  namespace: {{ $.Values.namespace }}
+  labels:
+    {{- include "backendservice.labels" $ | nindent 4 }}
+    service-type: preview
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "backendservice.selectorLabels" $ | nindent 4 }}

@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: "backendservice-{{ .Values.name }}"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "backendservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "backendservice.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecret }}
+      serviceAccountName: "backendservice-{{ .Values.name }}-sa"
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: ENVIRONMENT
+            value: {{ .Values.environmentName }}
+          - name: JWT_KEY_FILE
+            value: "/secrets/jwt"
+          {{ if .Values.database.usesDatabase }}
+          - name: DB_SETTINGS
+            value: "/secrets/dbconfig.json"
+          {{ end }}
+          {{ with .Values.extraEnvVars }}
+          {{- toYaml . | nindent 10 }}
+          {{ end }}
+          volumeMounts:
+            - mountPath: "/secrets"
+              name: "secret-{{ .Values.name }}"
+              readOnly: true
+      volumes:
+        - name: "secret-{{ .Values.name }}"
+          secret:
+            secretName: "backendservice-{{ .Values.name }}"
+
+  strategy:
+    {{ with .Values.rollout.strategy.blueGreen }}
+    blueGreen:
+      activeService: "backendservice-{{ $.Values.name }}"
+      previewService: "backendservice-{{ $.Values.name }}-preview"
+      {{- toYaml . | nindent 6 }}
+    {{ end }}
+    {{ with .Values.rollout.strategy.canary }}
+    canary:
+      stableService: "backendservice-{{ $.Values.name }}"
+      canaryService: "backendservice-{{ $.Values.name }}-preview"
+      {{- toYaml . | nindent 6 }}
+    {{ end }}

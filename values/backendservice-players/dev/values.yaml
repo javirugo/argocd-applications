@@ -1,0 +1,91 @@
+# Name of the release
+name: "server"
+
+# Environment name for the release
+environmentName: "dev"
+
+# Number of replicas
+replicaCount: 1
+
+# Image information
+image:
+  repository: "docker.galluman.com/unreal/backendserver"
+  tag: "e8b916f922c19df5f966634c79ef74502796d6e7"
+
+# Resources for the pods
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# Probes information
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+startupProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  httpGet:
+    path: /healthz
+    port: 8080
+
+# Traefik Gateway and HTTPRoute settings
+apigateway:
+  gatewayName: backend-api
+  hostname: api-dev.galluman.com
+  pathPrefix: /
+
+middleware:
+  enabled: true
+  spec:
+    rateLimit:
+      average: 50
+      burst: 100
+    redirectScheme:
+      scheme: https
+      permanent: true
+    headers:
+      stsSeconds: 31536000
+      stsIncludeSubdomains: true
+      stsPreload: true
+      contentTypeNosniff: true
+      browserXssFilter: true
+      customResponseHeaders:
+        X-Frame-Options: "DENY"
+        X-Content-Type-Options: "nosniff"
+        Referrer-Policy: "strict-origin-when-cross-origin"
+        Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+        Cross-Origin-Resource-Policy: "same-origin"
+      accessControlAllowOriginList:
+        - "*"
+      accessControlAllowMethods:
+        - GET
+        - POST
+      accessControlAllowHeaders:
+        - Authorization
+        - Content-Type
+      accessControlMaxAge: 100
+
+# Database settings
+database:
+  usesDatabase: true
+
+# Rollout Strategy
+# Argo Rollouts strategy section.
+# see: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
+rollout:
+  strategy:
+    blueGreen:
+      autoPromotionEnabled: true

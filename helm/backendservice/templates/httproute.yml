@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: "backendservice-{{ .Values.name }}"
+  namespace: { { .Values.environmentName } }
+  labels: { { - include "backendservice.labels" . | nindent 4 } }
+spec:
+  parentRefs:
+    - name: { { .Values.apigateway.gatewayName } }
+  hostnames:
+    - { { .Values.apigateway.hostname } }
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: { { .Values.apigateway.pathPrefix } }
+      backendRefs:
+        - name: "backendservice-{{ $.Values.name }}"
+          port: 8080
+      {{ if .Values.middleware.enabled }}
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: "backendservice-{{ .Values.name }}"
+      {{ end }}
