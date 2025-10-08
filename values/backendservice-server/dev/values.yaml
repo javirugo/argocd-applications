@@ -48,15 +48,9 @@ apigateway:
   pathPrefix: /
 
 middleware:
-  enabled: true
-  spec:
-    rateLimit:
-      average: 50
-      burst: 100
-    redirectScheme:
-      scheme: https
-      permanent: true
-    headers:
+  headers:
+    enabled: false
+    spec:
       stsSeconds: 31536000
       stsIncludeSubdomains: true
       stsPreload: true
@@ -77,6 +71,17 @@ middleware:
         - Authorization
         - Content-Type
       accessControlMaxAge: 100
+  redirectScheme:
+    enabled: true
+    spec:
+      scheme: https
+      permanent: true
+  rateLimit:
+    enabled: true
+    spec:
+      average: 50
+      burst: 100
+
 
 # Database settings
 database:

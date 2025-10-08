@@ -1,11 +1,43 @@
-{{ if .Values.middleware.enabled }}
+{{ if .Values.middleware.headers.enabled }}
+---
 kind: Middleware
 apiVersion: traefik.io/v1alpha1
 metadata:
-  name: "backendservice-{{ .Values.name }}"
+  name: "backendservice-{{ .Values.name }}-headers"
   namespace: {{ .Values.environmentName }}
   labels:
     {{- include "backendservice.labels" . | nindent 4 }}
 spec:
-  {{- toYaml .Values.middleware.spec | nindent 2 }}
+  headers:
+    {{- toYaml .Values.middleware.headers.spec | nindent 4 }}
+{{ end }}
+
+
+{{ if .Values.middleware.redirectScheme.enabled }}
+---
+kind: Middleware
+apiVersion: traefik.io/v1alpha1
+metadata:
+  name: "backendservice-{{ .Values.name }}-redirect"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+spec:
+  redirectScheme:
+    {{- toYaml .Values.middleware.redirectScheme.spec | nindent 4 }}
+{{ end }}
+
+
+{{ if .Values.middleware.rateLimit.enabled }}
+---
+kind: Middleware
+apiVersion: traefik.io/v1alpha1
+metadata:
+  name: "backendservice-{{ .Values.name }}-ratelimit"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+spec:
+  rateLimit:
+    {{- toYaml .Values.middleware.rateLimit.spec | nindent 4 }}
 {{ end }}

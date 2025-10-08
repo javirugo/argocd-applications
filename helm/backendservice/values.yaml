@@ -59,8 +59,15 @@ apigateway:
 # Traefik Middleware to apply to the HTTPRoute
 # see: 
 middleware:
-  enabled: false
-  spec: {}
+  headers:
+    enabled: false
+    spec: {}
+  redirectScheme:
+    enabled: false
+    spec: {}
+  rateLimit:
+    enabled: false
+    spec: {}
 
 # Database settings
 database:
