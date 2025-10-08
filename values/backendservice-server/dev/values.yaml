@@ -71,11 +71,6 @@ middleware:
         - Authorization
         - Content-Type
       accessControlMaxAge: 100
-  redirectScheme:
-    enabled: true
-    spec:
-      scheme: https
-      permanent: true
   rateLimit:
     enabled: true
     spec:

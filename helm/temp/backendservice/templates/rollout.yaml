@@ -1,0 +1,104 @@
+---
+# Source: backendservice/templates/rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: "backendservice-server"
+  namespace: dev
+  labels:
+    app.kubernetes.io/created-by: backendservice-helm
+    app.kubernetes.io/instance: "backendservice-server"
+    app.kubernetes.io/name: BackendService
+    app.kubernetes.io/version: 509741c79edaf9d6117de7c7618d7a9236779cca
+    lab.home/environment: dev
+    app: server
+    version: 509741c79edaf9d6117de7c7618d7a9236779cca
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: "backendservice-server"
+      app.kubernetes.io/name: BackendService
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/created-by: backendservice-helm
+        app.kubernetes.io/instance: "backendservice-server"
+        app.kubernetes.io/name: BackendService
+        app.kubernetes.io/version: 509741c79edaf9d6117de7c7618d7a9236779cca
+        lab.home/environment: dev
+        app: server
+        version: 509741c79edaf9d6117de7c7618d7a9236779cca
+    spec:
+      imagePullSecrets:
+        - name: nexuspullsecret
+      serviceAccountName: "backendservice-server-sa"
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: backendservice
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: docker.galluman.com/backendservices/backendserver:509741c79edaf9d6117de7c7618d7a9236779cca
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+          - name: ENVIRONMENT
+            value: dev
+          - name: JWT_KEY_FILE
+            value: "/secrets/jwt"
+          
+          - name: DB_SETTINGS
+            value: "/secrets/dbconfig.json"
+          
+          
+          volumeMounts:
+            - mountPath: "/secrets"
+              name: "secret-server"
+              readOnly: true
+      volumes:
+        - name: "secret-server"
+          secret:
+            secretName: "backendservice-server"
+
+  strategy:
+    
+    blueGreen:
+      activeService: "backendservice-server"
+      previewService: "backendservice-server-preview"
+      autoPromotionEnabled: true

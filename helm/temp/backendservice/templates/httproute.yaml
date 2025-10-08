@@ -1,0 +1,48 @@
+---
+# Source: backendservice/templates/httproute.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: "backendservice-server"
+  namespace: dev
+  labels:
+    app.kubernetes.io/created-by: backendservice-helm
+    app.kubernetes.io/instance: "backendservice-server"
+    app.kubernetes.io/name: BackendService
+    app.kubernetes.io/version: 509741c79edaf9d6117de7c7618d7a9236779cca
+    lab.home/environment: dev
+    app: server
+    version: 509741c79edaf9d6117de7c7618d7a9236779cca
+spec:
+  parentRefs:
+    - name: backend-api-dev
+  hostnames:
+    - api-dev.galluman.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: "backendservice-server"
+          port: 8080
+          kind: Service
+
+      # 
+      # filters:
+      #   
+      #   
+      #   - type: ExtensionRef
+      #     extensionRef:
+      #       group: traefik.io
+      #       kind: Middleware
+      #       name: "backendservice-server-redirect"
+      #   
+      #   
+      #   - type: ExtensionRef
+      #     extensionRef:
+      #       group: traefik.io
+      #       kind: Middleware
+      #       name: "backendservice-server-ratelimit"
+      #   
+      #

@@ -57,12 +57,9 @@ apigateway:
   pathPrefix: /
 
 # Traefik Middleware to apply to the HTTPRoute
-# see: 
+# see:
 middleware:
   headers:
-    enabled: false
-    spec: {}
-  redirectScheme:
     enabled: false
     spec: {}
   rateLimit:

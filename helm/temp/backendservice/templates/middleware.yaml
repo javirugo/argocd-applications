@@ -1,0 +1,49 @@
+---
+# Source: backendservice/templates/middleware.yaml
+# 
+
+# 
+# ---
+# kind: Middleware
+# apiVersion: traefik.io/v1alpha1
+# metadata:
+#   name: "backendservice-server-redirect"
+#   namespace: dev
+#   labels:
+#
+    app.kubernetes.io/created-by: backendservice-helm
+    app.kubernetes.io/instance: "backendservice-server"
+    app.kubernetes.io/name: BackendService
+    app.kubernetes.io/version: 509741c79edaf9d6117de7c7618d7a9236779cca
+    lab.home/environment: dev
+    app: server
+    version: 509741c79edaf9d6117de7c7618d7a9236779cca
+# spec:
+#   redirectScheme:
+#
+    permanent: true
+    scheme: https
+# 
+
+# 
+# ---
+# kind: Middleware
+# apiVersion: traefik.io/v1alpha1
+# metadata:
+#   name: "backendservice-server-ratelimit"
+#   namespace: dev
+#   labels:
+#
+    app.kubernetes.io/created-by: backendservice-helm
+    app.kubernetes.io/instance: "backendservice-server"
+    app.kubernetes.io/name: BackendService
+    app.kubernetes.io/version: 509741c79edaf9d6117de7c7618d7a9236779cca
+    lab.home/environment: dev
+    app: server
+    version: 509741c79edaf9d6117de7c7618d7a9236779cca
+# spec:
+#   rateLimit:
+#
+    average: 50
+    burst: 100
+#

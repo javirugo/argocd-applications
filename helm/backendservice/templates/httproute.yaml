@@ -18,7 +18,9 @@ spec:
       backendRefs:
         - name: "backendservice-{{ $.Values.name }}"
           port: 8080
-      {{ if or .Values.middleware.headers.enabled .Values.middleware.redirectScheme.enabled .Values.middleware.rateLimit.enabled }}
+          kind: Service
+
+      {{ if or .Values.middleware.headers.enabled .Values.middleware.rateLimit.enabled }}
       filters:
         {{ if .Values.middleware.headers.enabled }}
         - type: ExtensionRef
@@ -26,13 +28,6 @@ spec:
             group: traefik.io
             kind: Middleware
             name: "backendservice-{{ .Values.name }}-headers"
-        {{ end }}
-        {{ if .Values.middleware.redirectScheme.enabled }}
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: "backendservice-{{ .Values.name }}-redirect"
         {{ end }}
         {{ if .Values.middleware.rateLimit.enabled }}
         - type: ExtensionRef
