@@ -1,5 +1,5 @@
 # Name of the release
-name: "players"
+name: "server"
 
 # Environment name for the release
 environmentName: "dev"
@@ -9,7 +9,7 @@ replicaCount: 1
 
 # Image information
 image:
-  repository: "docker.galluman.com/unreal/backendplayers"
+  repository: "docker.galluman.com/unreal/backendserver"
   tag: "d341f4935688f10fb7051bfe1a17232cff67d988"
 
 # Resources for the pods
@@ -46,6 +46,37 @@ apigateway:
   gatewayName: backend-api
   hostname: api-dev.galluman.com
   pathPrefix: /
+
+middleware:
+  enabled: true
+  spec:
+    rateLimit:
+      average: 50
+      burst: 100
+    redirectScheme:
+      scheme: https
+      permanent: true
+    headers:
+      stsSeconds: 31536000
+      stsIncludeSubdomains: true
+      stsPreload: true
+      contentTypeNosniff: true
+      browserXssFilter: true
+      customResponseHeaders:
+        X-Frame-Options: "DENY"
+        X-Content-Type-Options: "nosniff"
+        Referrer-Policy: "strict-origin-when-cross-origin"
+        Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+        Cross-Origin-Resource-Policy: "same-origin"
+      accessControlAllowOriginList:
+        - "*"
+      accessControlAllowMethods:
+        - GET
+        - POST
+      accessControlAllowHeaders:
+        - Authorization
+        - Content-Type
+      accessControlMaxAge: 100
 
 # Database settings
 database:

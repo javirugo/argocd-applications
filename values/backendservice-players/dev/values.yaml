@@ -47,37 +47,6 @@ apigateway:
   hostname: api-dev.galluman.com
   pathPrefix: /
 
-middleware:
-  enabled: true
-  spec:
-    rateLimit:
-      average: 50
-      burst: 100
-    redirectScheme:
-      scheme: https
-      permanent: true
-    headers:
-      stsSeconds: 31536000
-      stsIncludeSubdomains: true
-      stsPreload: true
-      contentTypeNosniff: true
-      browserXssFilter: true
-      customResponseHeaders:
-        X-Frame-Options: "DENY"
-        X-Content-Type-Options: "nosniff"
-        Referrer-Policy: "strict-origin-when-cross-origin"
-        Permissions-Policy: "geolocation=(), microphone=(), camera=()"
-        Cross-Origin-Resource-Policy: "same-origin"
-      accessControlAllowOriginList:
-        - "*"
-      accessControlAllowMethods:
-        - GET
-        - POST
-      accessControlAllowHeaders:
-        - Authorization
-        - Content-Type
-      accessControlMaxAge: 100
-
 # Database settings
 database:
   usesDatabase: true

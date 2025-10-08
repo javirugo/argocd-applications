@@ -20,10 +20,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  {{- with .Values.strategy.blueGreen }}
+  {{- with .Values.rollout.strategy.blueGreen }}
   name: "backendservice-{{ $.Values.name }}-preview"
   {{- end }}
-  {{- with .Values.strategy.canary }}
+  {{- with .Values.rollout.strategy.canary }}
   name: "backendservice-{{ $.Values.name }}-canary"
   {{- end }}
   namespace: {{ $.Values.namespace }}

@@ -1,5 +1,5 @@
 # Name of the release
-name: "players"
+name: "server"
 
 # Environment name for the release
 environmentName: "prod"
@@ -9,7 +9,7 @@ replicaCount: 2
 
 # Image information
 image:
-  repository: "docker.galluman.com/unreal/backendplayers"
+  repository: "docker.galluman.com/unreal/backendserver"
   tag: "d341f4935688f10fb7051bfe1a17232cff67d988"
 
 # Resources for the pods

@@ -9,13 +9,13 @@ replicaCount: 1
 
 # Image information
 image:
-  repository: "docker.galluman.com/unreal/backendNAME"
+  repository: "docker.galluman.com/backendservice/backendNAME"
   tag: ""
   pullPolicy: IfNotPresent
   imagePullSecret: nexuspullsecret
 
 # Create service account and mount api token for the deployment
-# The name of the service account will be generated like: unrealserver-$RELEASE_NAME
+# The name of the service account will be generated like: backendservice-$RELEASE_NAME
 serviceAccount:
   create: true
   automount: false
