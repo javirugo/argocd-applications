@@ -43,7 +43,7 @@ startupProbe:
 
 # Traefik Gateway and HTTPRoute settings
 apigateway:
-  gatewayName: backend-api
+  gatewayName: backend-api-dev
   hostname: api-dev.galluman.com
   pathPrefix: /
 
