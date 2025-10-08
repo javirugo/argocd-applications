@@ -10,7 +10,7 @@ replicaCount: 1
 # Image information
 image:
   repository: "docker.galluman.com/backendservices/backendserver"
-  tag: "b868bb259aae5782df78bf4cf52465ad3456944d"
+  tag: "509741c79edaf9d6117de7c7618d7a9236779cca"
 
 # Resources for the pods
 resources:
