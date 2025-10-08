@@ -1,0 +1,12 @@
+{{ if .Values.middleware.rateLimit.enabled }}
+kind: Middleware
+apiVersion: traefik.io/v1alpha1
+metadata:
+  name: "backendservice-{{ .Values.name }}-ratelimit"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+spec:
+  rateLimit:
+    {{- toYaml .Values.middleware.rateLimit.spec | nindent 4 }}
+{{ end }}

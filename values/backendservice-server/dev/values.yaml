@@ -49,7 +49,7 @@ apigateway:
 
 middleware:
   headers:
-    enabled: false
+    enabled: true
     spec:
       stsSeconds: 31536000
       stsIncludeSubdomains: true
