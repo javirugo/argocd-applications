@@ -20,16 +20,16 @@ spec:
           port: 8080
           kind: Service
 
-      {{ if or .Values.middleware.headers.enabled .Values.middleware.rateLimit.enabled }}
+      {{ if or .Values.apigateway.cors.enabled .Values.apigateway.rateLimit.enabled }}
       filters:
-        {{ if .Values.middleware.headers.enabled }}
+        {{ if .Values.apigateway.cors.enabled }}
         - type: ExtensionRef
           extensionRef:
             group: traefik.io
             kind: Middleware
-            name: "backendservice-{{ .Values.name }}-headers"
+            name: "backendservice-{{ .Values.name }}-cors"
         {{ end }}
-        {{ if .Values.middleware.rateLimit.enabled }}
+        {{ if .Values.apigateway.rateLimit.enabled }}
         - type: ExtensionRef
           extensionRef:
             group: traefik.io
