@@ -41,41 +41,17 @@ startupProbe:
     path: /healthz
     port: 8080
 
-# Traefik Gateway and HTTPRoute settings
+# Gateway and HTTPRoute settings
 apigateway:
   gatewayName: backend-api-dev
   hostname: api-dev.galluman.com
   pathPrefix: /
-
-middleware:
-  headers:
-    enabled: true
-    spec:
-      stsSeconds: 31536000
-      stsIncludeSubdomains: true
-      stsPreload: true
-      contentTypeNosniff: true
-      browserXssFilter: true
-      customResponseHeaders:
-        X-Frame-Options: "DENY"
-        X-Content-Type-Options: "nosniff"
-        Referrer-Policy: "strict-origin-when-cross-origin"
-        Permissions-Policy: "geolocation=(), microphone=(), camera=()"
-        Cross-Origin-Resource-Policy: "same-origin"
-      accessControlAllowOriginList:
-        - "*"
-      accessControlAllowMethods:
-        - GET
-        - POST
-      accessControlAllowHeaders:
-        - Authorization
-        - Content-Type
-      accessControlMaxAge: 100
+  cors:
+    enabled: false
+    spec: {}
   rateLimit:
-    enabled: true
-    spec:
-      average: 50
-      burst: 100
+    enabled: false
+    spec: {}
 
 
 # Database settings
