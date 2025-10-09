@@ -5,6 +5,15 @@ metadata:
   namespace: {{ .Values.environmentName }}
   labels:
     {{- include "backendservice.labels" . | nindent 4 }}
+  annotations:
+    {{- $plugins := list }}
+    {{- if .Values.apigateway.cors.enabled }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-cors" .Values.name }}
+    {{- end }}
+    {{- if .Values.apigateway.rateLimit.enabled }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-ratelimit" .Values.name }}
+    {{- end }}
+    konghq.com/plugins: {{ join "," $plugins | quote }}
 spec:
   parentRefs:
     - name: {{ .Values.apigateway.gatewayName }}
@@ -19,21 +28,3 @@ spec:
         - name: "backendservice-{{ $.Values.name }}"
           port: 8080
           kind: Service
-
-      {{ if or .Values.apigateway.cors.enabled .Values.apigateway.rateLimit.enabled }}
-      filters:
-        {{ if .Values.apigateway.cors.enabled }}
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: "backendservice-{{ .Values.name }}-cors"
-        {{ end }}
-        {{ if .Values.apigateway.rateLimit.enabled }}
-        - type: ExtensionRef
-          extensionRef:
-            group: traefik.io
-            kind: Middleware
-            name: "backendservice-{{ .Values.name }}-ratelimit"
-        {{ end }}
-      {{ end }}
