@@ -27,22 +27,3 @@ spec:
         - name: "backendservice-server"
           port: 8080
           kind: Service
-
-      # 
-      # filters:
-      #   
-      #   
-      #   - type: ExtensionRef
-      #     extensionRef:
-      #       group: traefik.io
-      #       kind: Middleware
-      #       name: "backendservice-server-redirect"
-      #   
-      #   
-      #   - type: ExtensionRef
-      #     extensionRef:
-      #       group: traefik.io
-      #       kind: Middleware
-      #       name: "backendservice-server-ratelimit"
-      #   
-      #
