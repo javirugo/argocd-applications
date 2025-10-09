@@ -8,10 +8,10 @@ metadata:
   annotations:
     {{- $plugins := list }}
     {{- if .Values.apigateway.cors.enabled }}
-      {{- $plugins = append $plugins (printf "backendservice-%s-cors" .Values.name }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-cors" .Values.name) }}
     {{- end }}
     {{- if .Values.apigateway.rateLimit.enabled }}
-      {{- $plugins = append $plugins (printf "backendservice-%s-ratelimit" .Values.name }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-ratelimit" .Values.name) }}
     {{- end }}
     konghq.com/plugins: {{ join "," $plugins | quote }}
 spec:
