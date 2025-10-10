@@ -43,8 +43,8 @@ startupProbe:
 
 # Gateway and HTTPRoute settings
 apigateway:
-  gatewayName: backend-api
-  hostname: api.galluman.com
+  gatewayName: backend-api-dev
+  hostname: api-dev.galluman.com
   pathPrefix: /
   cors:
     enabled: true
