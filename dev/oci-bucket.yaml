@@ -1,7 +1,7 @@
-apiVersion: objectstorage.oci.upbound.io/v1alpha1
+apiVersion: objectstorage.oci.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: demo-bucket
+  name: test-cp-bucket
   namespace: dev
 spec:
   providerConfigRef:
