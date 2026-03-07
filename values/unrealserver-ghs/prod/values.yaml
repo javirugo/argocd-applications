@@ -3,7 +3,7 @@ environmentName: "prod"
 
 image:
   repository: "docker.galluman.com/unreal/ghs-server"
-  tag: "189375360d072fd9e1004d823a8fa38e23c6ea2d"
+  tag: "3072133"
   pullPolicy: Always
 
 resources:

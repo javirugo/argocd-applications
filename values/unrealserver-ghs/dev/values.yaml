@@ -2,7 +2,7 @@ name: "unrealserver-ghs"
 environmentName: "dev"
 image:
   repository: "docker.galluman.com/unreal/ghs-server"
-  tag: "10031633"
+  tag: "3072133"
   pullPolicy: Always
 resources:
   requests:
