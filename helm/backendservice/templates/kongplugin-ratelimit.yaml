@@ -1,0 +1,12 @@
+{{ if .Values.apigateway.rateLimit.enabled }}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+plugin: rate-limiting
+metadata:
+  name: "backendservice-{{ .Values.name }}-ratelimit"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+config:
+  {{- toYaml .Values.apigateway.rateLimit.spec | nindent 2 }}
+{{ end }}

@@ -1,0 +1,30 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: "backendservice-{{ .Values.name }}"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+  annotations:
+    {{- $plugins := list }}
+    {{- if .Values.apigateway.cors.enabled }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-cors" .Values.name) }}
+    {{- end }}
+    {{- if .Values.apigateway.rateLimit.enabled }}
+      {{- $plugins = append $plugins (printf "backendservice-%s-ratelimit" .Values.name) }}
+    {{- end }}
+    konghq.com/plugins: {{ join "," $plugins | quote }}
+spec:
+  parentRefs:
+    - name: {{ .Values.apigateway.gatewayName }}
+  hostnames:
+    - {{ .Values.apigateway.hostname }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: {{ .Values.apigateway.pathPrefix }}
+      backendRefs:
+        - name: "backendservice-{{ $.Values.name }}"
+          port: 8080
+          kind: Service

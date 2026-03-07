@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backendservice-server
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/refresh: hard
+spec:
+  project: dev
+  sources:
+  - repoURL: https://nexus.galluman.com/repository/helm-homelab/
+    chart: backendservice
+    targetRevision: 0.0.1
+    helm:
+      releaseName: backendservice-server-dev
+      valueFiles:
+      - $values/values/backendservice-server/dev/values.yaml
+  - repoURL: https://github.com/javirugo/argocd-applications.git
+    targetRevision: main
+    ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - PrunePropagationPolicy=foreground
+    - Replace=true

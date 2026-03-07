@@ -1,0 +1,12 @@
+{{ if .Values.apigateway.cors.enabled }}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+plugin: cors
+metadata:
+  name: "backendservice-{{ .Values.name }}-cors"
+  namespace: {{ .Values.environmentName }}
+  labels:
+    {{- include "backendservice.labels" . | nindent 4 }}
+config:
+  {{- toYaml .Values.apigateway.cors.spec | nindent 2 }}
+{{ end }}
