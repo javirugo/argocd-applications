@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: unrealserver-darkdungeons-prod
+  name: unrealserver-ghs-dev
   namespace: argocd
   annotations:
     argocd.argoproj.io/refresh: hard
 spec:
-  project: prod
+  project: dev
   sources:
   - repoURL: https://nexus.galluman.com/repository/helm-homelab/
     chart: unrealserver
     targetRevision: 0.0.1
     helm:
-      releaseName: darkdungeons-prod
+      releaseName: ghs-dev
       valueFiles:
-      - $values/values/unrealserver-darkdungeons/prod/values.yaml
+      - $values/values/unrealserver-ghs/dev/values.yaml
   - repoURL: https://github.com/javirugo/argocd-applications.git
     targetRevision: main
     ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: prod
+    namespace: dev
   syncPolicy:
     automated:
       prune: true

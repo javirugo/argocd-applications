@@ -1,7 +1,7 @@
-name: "unrealserver-darkdungeons"
+name: "unrealserver-ghs"
 environmentName: "dev"
 image:
-  repository: "docker.galluman.com/unreal/darkdungeons-server"
+  repository: "docker.galluman.com/unreal/ghs-server"
   tag: "10031633"
   pullPolicy: Always
 resources:
@@ -12,11 +12,11 @@ resources:
     cpu: 4
     memory: 8G
 serverMaps:
-  map1: Start_Persistent
-  map2: Start_Persistent
-  map3: Start_Persistent
-  map4: Start_Persistent
-  map5: Start_Persistent
+  map1: Airport
+  map2: Airport
+  map3: Airport
+  map4: Airport
+  map5: Airport
 nodePorts:
   server1: 30777
   server2: 30778
