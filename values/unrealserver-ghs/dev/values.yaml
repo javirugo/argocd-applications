@@ -14,9 +14,9 @@ resources:
 serverMaps:
   map1: GHS_Airport
   map2: GHS_AbandonedFactory
-  map3: GHS_Airport
-  map4: GHS_Airport
-  map5: GHS_Airport
+  map3: GHS_AbandonedFactory
+  map4: GHS_AbandonedFactory
+  map5: GHS_AbandonedFactory
 nodePorts:
   server1: 30777
   server2: 30778
