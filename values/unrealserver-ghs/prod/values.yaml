@@ -15,11 +15,11 @@ resources:
     memory: 512Mi
 
 serverMaps:
-  map1: GHS_Airport
-  map2: GHS_AbandonedFactory
-  map3: GHS_Airport
-  map4: GHS_Airport
-  map5: GHS_Airport
+  map1: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
+  map2: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.GHS_AbandonedFactory
+  map3: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
+  map4: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
+  map5: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
 
 nodePorts:
   server1: 31777
