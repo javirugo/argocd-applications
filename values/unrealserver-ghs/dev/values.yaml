@@ -14,7 +14,7 @@ resources:
 serverMaps:
   map1: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
   map2: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.GHS_AbandonedFactory
-  map3: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
+  map3: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.GHS_AbandonedFactory
   map4: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
   map5: /Game/GHS/Levels/Airport/GHS_Airport.GHS_Airport
 nodePorts:
