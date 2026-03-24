@@ -12,11 +12,11 @@ resources:
     cpu: 4
     memory: 8G
 serverMaps:
-  map1: /Game/GHS/Levels/Airport/GHS_Airport
-  map2: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory
-  map3: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory
-  map4: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory
-  map5: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory
+  map1: /Game/GHS/Levels/Airport/GHS_Airport.umap
+  map2: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.umap
+  map3: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.umap
+  map4: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.umap
+  map5: /Game/GHS/Levels/AbandonedFactory/GHS_AbandonedFactory.umap
 nodePorts:
   server1: 30777
   server2: 30778
