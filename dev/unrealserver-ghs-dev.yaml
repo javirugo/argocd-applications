@@ -10,7 +10,7 @@ spec:
   sources:
   - repoURL: https://nexus.galluman.com/repository/helm-homelab/
     chart: unrealserver
-    targetRevision: 0.0.1
+    targetRevision: 0.0.2
     helm:
       releaseName: ghs-dev
       valueFiles:
